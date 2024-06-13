@@ -28,7 +28,7 @@ public class DataInitializer {
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         ((UserServiceImpl) userService).setPasswordEncoder(passwordEncoder);
         Role adminRole = new Role("ROLE_ADMIN");
         Role userRole = new Role("ROLE_USER");

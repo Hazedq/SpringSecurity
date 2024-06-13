@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -20,7 +21,7 @@ public class User implements UserDetails {
     private String password;
     private String email;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name ="users_roles",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;

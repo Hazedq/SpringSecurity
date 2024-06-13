@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
+
     private final UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -26,30 +27,36 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
     @Override
+    @Transactional(readOnly = true)
     public User findById(long id) {
         return userRepository.getById(id);
     }
+
     @Override
+    @Transactional(readOnly = true)
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
     @Override
     @Transactional
     public void saveUser(User user) {
-        String password = user.getPassword();
-        password = passwordEncoder.encode(password);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+
     @Override
     @Transactional
     public void deleteUserById(long userId) {
         userRepository.deleteById(userId);
     }
+
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
